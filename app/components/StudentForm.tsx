@@ -10,18 +10,16 @@ interface Nilai {
 interface StudentFormProps {
   mahasiswa: string[];
   aspekPenilaian: Nilai[];
-  selectNilai: () => void;
 }
 
 const StudentForm: React.FC<StudentFormProps> = ({
   mahasiswa,
   aspekPenilaian,
-  selectNilai,
 }) => {
   return (
     <table className="table-auto border border-separate my-5 self-center">
       <thead>
-        <tr>
+        <tr className="items-center justify-center">
           {mahasiswa.length && "Nama Mahasiswa"}
           {aspekPenilaian.length &&
             aspekPenilaian.map((item, index) => (
@@ -33,15 +31,18 @@ const StudentForm: React.FC<StudentFormProps> = ({
         {mahasiswa.length &&
           mahasiswa.map((mahasiswa, nomor) => (
             <tr key={nomor}>
-              <td className="text-center border">{mahasiswa}</td>
+              <td className="text-center border">
+                <input
+                  type="text"
+                  name={mahasiswa}
+                  value={mahasiswa}
+                  readOnly
+                />
+              </td>
               {aspekPenilaian.length &&
                 aspekPenilaian.map((nilai, index) => (
                   <td className="text-center border" key={index}>
-                    <OptionSelect
-                      index={index}
-                      scale={nilai.scale}
-                      selectNilai={selectNilai}
-                    />
+                    <OptionSelect index={index} scale={nilai.scale} indexMahasiswa={nomor + 1}/>
                   </td>
                 ))}
             </tr>

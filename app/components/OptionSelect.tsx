@@ -5,27 +5,20 @@ import { useState } from "react";
 interface OptionSelectProps {
   index: number;
   scale: number;
-  selectNilai: () => void;
+  indexMahasiswa: number;
 }
 
 const OptionSelect: React.FC<OptionSelectProps> = ({
   index,
   scale,
-  selectNilai,
+  indexMahasiswa,
 }) => {
-  const [nilai, setNilai] = useState(0);
-  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setNilai(value);
-  };
-
   return (
     <select
-      name={`aspek-${index + 1}`}
-      id={`aspek-${index + 1}`}
+      name={`aspek_penilaian_${index + 1}-mahasiswa_${indexMahasiswa}`}
+      id={`aspek_penilaian_${index + 1}-mahasiswa_${indexMahasiswa}`}
       className="bg-white"
-      value={nilai}
-      onSelect={(e) => handleSelect(e)}
+      defaultValue={0}
     >
       {Array.from({ length: scale }, (_, i) => (
         <option key={`option-${i + 1}`} value={i + 1}>
