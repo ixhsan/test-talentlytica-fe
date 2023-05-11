@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import StudentForm from "./components/StudentForm";
+import GenerateData from "./components/GenerateData";
 
 interface dataInterface {
   [key: string]: FormDataEntryValue;
@@ -14,7 +15,7 @@ interface resultInterface {
 }
 
 export default function Home() {
-  const [numOfStudent, setNumOfStudent] = useState(1);
+  const [numOfStudents, setNumOfStudents] = useState(1);
   const [numOfAspects, setNumOfAspects] = useState(1);
   const [mahasiswa, setMahasiswa] = useState(["mahasiswa_1"]);
   const [aspekPenilaian, setAspekPenilaian] = useState([
@@ -34,15 +35,15 @@ export default function Home() {
   }, [numOfAspects, aspekPenilaian]);
 
   useEffect(() => {
-    if (numOfStudent > mahasiswa.length) {
+    if (numOfStudents > mahasiswa.length) {
       setMahasiswa((prevState) => [
         ...prevState,
         `mahasiswa_${mahasiswa.length + 1}`,
       ]);
-    } else if (numOfStudent < mahasiswa.length) {
-      setMahasiswa((prevState) => [...prevState.slice(0, numOfStudent)]);
+    } else if (numOfStudents < mahasiswa.length) {
+      setMahasiswa((prevState) => [...prevState.slice(0, numOfStudents)]);
     }
-  }, [numOfStudent, mahasiswa]);
+  }, [numOfStudents, mahasiswa]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +75,7 @@ export default function Home() {
   const increaseNumberofStudent = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setNumOfStudent(Number(event.target.value));
+    setNumOfStudents(Number(event.target.value));
   };
   const increaseNumberofAspects = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -85,35 +86,12 @@ export default function Home() {
   return (
     <main>
       <div className="flex flex-col mt-20 w-full">
-        <div className="flex flex-col justify- items-center gap-2 py-4">
-          <h2 className="font-bold text-lg">GENERATE DATA</h2>
-          <div className="flex flex-row space-x-5">
-            <label htmlFor="student">Student</label>
-            <input
-              type="number"
-              step={1}
-              min={1}
-              max={100}
-              name="student"
-              value={numOfStudent}
-              className="text-center"
-              onChange={increaseNumberofStudent}
-            />
-          </div>
-          <div className="flex flex-row space-x-5">
-            <label htmlFor="aspect">Aspect</label>
-            <input
-              type="number"
-              step={1}
-              min={1}
-              max={100}
-              name="student"
-              value={numOfAspects}
-              onChange={increaseNumberofAspects}
-              className="text-center"
-            />
-          </div>
-        </div>
+        <GenerateData
+          increaseNumOfStudents={increaseNumberofStudent}
+          numOfStudents={numOfStudents}
+          increaseNumOfAspects={increaseNumberofAspects}
+          numOfAspects={numOfAspects}
+        />
         <form
           onSubmit={handleSubmit}
           className="w-full flex flex-col justify-center items-center"
