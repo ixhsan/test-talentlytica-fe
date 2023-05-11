@@ -56,14 +56,9 @@ export default function Home() {
     }
 
     for (const key in data) {
-      console.log("🚀 ~ file: page.tsx:59 ~ handleSubmit ~ key:", key);
       const [aspect, student] = key.split("-");
       if (aspect.includes("aspek_penilaian")) {
         result[aspect] = result[aspect] || {};
-        console.log(
-          "🚀 ~ file: page.tsx:64 ~ handleSubmit ~ result[aspect][student]:",
-          result[aspect][student]
-        );
         result[aspect][student] = data[key];
       }
     }
